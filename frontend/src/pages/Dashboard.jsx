@@ -4,7 +4,8 @@ import { useTheaterContext } from '../context/TheaterContext';
 import { Film, MapPin, LogOut, Star, Navigation, Search } from 'lucide-react';
 import axios from 'axios'
 import { serverurl } from '../App';
-import backgroundImage from '../assets/finalimage.jpg'; // Added background image import
+import backgroundImage from '../assets/finalimage.jpg';
+import logo from '../assets/Google_Icons-09-512.webp'; // Import the logo
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -94,8 +95,10 @@ const Dashboard = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <div className="flex items-center space-x-3">
-                            <Film className="w-8 h-8 text-purple-600" />
-                            <h1 className="text-2xl font-bold text-gray-900">Movie Theaters</h1>
+                            <img src={logo} alt="Logo" className="w-10 h-10 rounded-full object-contain" />
+                            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                                MovieFinder
+                            </h1>
                         </div>
 
                         <div className="flex items-center space-x-4">
