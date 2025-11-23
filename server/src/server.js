@@ -7,10 +7,10 @@ import { connectDB } from "./config/db.js";
 dotenv.config();
 
 
-// 🌍 Connect to MongoDB
-connectDB();
 
 const PORT = process.env.PORT || 8080;
+const NODE_ENV = process.env.NODE_ENV;
+
 
 // 🔥 Create server
 const server = http.createServer(app);
@@ -33,6 +33,30 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+// server.listen(PORT, () => {
+//   console.log(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+// });
+
+const startServer=async()=>{
+    try {
+      await connectDB();
+
+        //listen for local development only
+        if(NODE_ENV!= "production"){
+            app.listen(PORT,()=>{
+                console.log(`Server is running on ${PORT}`);
+            });
+        }
+    } catch (error) {
+        console.log("Error in starting server:",error);
+        // Don't exit in production, let Vercel handle it
+        if(NODE_ENV !== "production") {
+            process.exit(1);
+        }
+    }
+}
+
+// Only start server if not in production (Vercel handles this)
+if(NODE_ENV !== "production") {
+    startServer();
+}
